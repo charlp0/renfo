@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e14">
+<title>Renfo Ping — 45 min</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{background:#0a0e14;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased;
+padding:calc(14px + env(safe-area-inset-top)) 12px calc(86px + env(safe-area-inset-bottom));}
+.wrap{max-width:560px;margin:0 auto}
+h1{font-size:21px;font-weight:800;letter-spacing:-.4px}
+h1 .em{color:#2dd4bf}
+.sub{color:#7d8794;font-size:12.5px;margin-top:2px}
+.chips{display:flex;gap:8px;margin-top:12px}
+.chip{flex:1;border:1px solid #263042;background:#141b26;color:#c9d1d9;font-size:13px;font-weight:600;padding:11px 8px;border-radius:12px;text-align:center;cursor:pointer}
+.chip:active{background:#1c2635}
+.chip.on{border-color:#2dd4bf;color:#2dd4bf;background:#0f2a28}
+h2{font-size:14px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.tag{font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:20px}
+.tagA{background:#163a2a;color:#3fb950}.tagB{background:#0f3438;color:#2dd4bf}
+.tagC{background:#14283f;color:#2e9bff}.tagD{background:#3a2a16;color:#f5a97f}
+.tagV{background:#2a1f3a;color:#a371f7}
+.rest-hint{font-size:11px;color:#6e7681;font-weight:400;margin-left:auto}
+.card{background:#11161f;border:1px solid #1d2531;border-radius:16px;padding:14px;margin-bottom:12px}
+.chead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.chead h3{font-size:17px;font-weight:700}
+.dose{font-size:12px;color:#2dd4bf;font-weight:700;white-space:nowrap}
+.video{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;cursor:pointer}
+.video img{width:100%;height:100%;object-fit:cover;opacity:.75}
+.video .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.video .play span{width:58px;height:58px;border-radius:50%;background:rgba(13,17,23,.78);border:2px solid #2dd4bf;display:flex;align-items:center;justify-content:center;font-size:22px;color:#2dd4bf;padding-left:4px}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytlink{display:block;text-align:right;font-size:11px;color:#6e7681;text-decoration:none;margin-top:6px}
+.cues{margin:10px 0 12px;padding-left:16px}
+.cues li{font-size:13px;color:#b6bfc9;margin:4px 0}
+.sets{display:flex;gap:10px}
+.set{flex:1;min-height:48px;border-radius:12px;border:1.5px solid #2a3547;background:#151c28;color:#8b96a5;font-size:14px;font-weight:700;cursor:pointer}
+.set:active{transform:scale(.97)}
+.set.done{background:#12332a;border-color:#3fb950;color:#3fb950}
+.set.done::after{content:" ✓"}
+.warm{display:flex;align-items:center;gap:12px}
+.warm p{flex:1;font-size:13px;color:#c2cad3}
+.warm .set{flex:0 0 92px}
+.rules{background:#11161f;border-left:3px solid #e3b341;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#c9d1d9;margin:14px 0 6px}
+.rules.vac{border-left-color:#a371f7}
+.footer{margin-top:22px;background:#11161f;border:1px solid #1d2531;border-radius:14px;padding:14px;font-size:12.5px;color:#c2cad3}
+.footer b{color:#2dd4bf}
+#bar{position:fixed;left:0;right:0;bottom:0;background:rgba(13,18,26,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid #1d2531;
+padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px;z-index:50}
+#bar .prog{font-size:13px;font-weight:700;color:#a9b2bd;min-width:74px}
+#bar .prog b{color:#2dd4bf}
+#timer{flex:1;text-align:center;font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;color:#e6edf3}
+#timer.run{color:#2dd4bf}
+#timer.zero{color:#3fb950;animation:pulse .5s ease 4}
+@keyframes pulse{50%{opacity:.25}}
+.tbtn{border:1px solid #263042;background:#141b26;color:#c9d1d9;font-size:13px;font-weight:700;padding:10px 12px;border-radius:11px;cursor:pointer}
+.tbtn:active{background:#1c2635}
+#done-banner{display:none;background:linear-gradient(135deg,#12332a,#0f2a28);border:1px solid #3fb950;color:#3fb950;font-weight:700;text-align:center;border-radius:14px;padding:14px;margin:14px 0;font-size:15px}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>🏋️ Renfo <span class="em">spécial ping</span></h1>
+<div class="sub">Coche tes séries, le chrono de repos part tout seul · progression sauvegardée</div>
+
+<div class="chips">
+  <button class="chip mode on" data-mode="salle">🏋️ Salle — 45 min</button>
+  <button class="chip mode" data-mode="vac">🏖️ Vacances — 30 min</button>
+</div>
+<div class="chips">
+  <button class="chip" id="wake">🔆 Écran allumé</button>
+  <button class="chip" id="reset">↺ Nouvelle séance</button>
+</div>
+
+<div id="done-banner"></div>
+
+<!-- ==================== MODE SALLE ==================== -->
+<div id="sec-salle">
+
+<div class="rules">⚖️ <b>Règles :</b> garde 2-3 reps en réserve (jamais à l'échec) · bloc D <b>très léger</b> · douleur &gt;3/10 pendant, ou le lendemain matin → allège. Jour SANS ping.</div>
+
+<h2><span class="tag tagB">ÉCHAUFFEMENT</span><span class="rest-hint">5 min</span></h2>
+<div class="card warm">
+  <p>Rameur ou vélo 3-4 min + cercles d'épaules et rotations de hanches</p>
+  <button class="set" data-k="w-1">Fait</button>
+</div>
+
+<h2><span class="tag tagA">BLOC A</span> Jambes &amp; appuis <span class="rest-hint">repos 90″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Goblet Squat</h3><span class="dose">3 × 8-10</span></div>
+  <div class="video" data-id="nfX7IFK9UNI"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=nfX7IFK9UNI" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Haltère vertical collé à la poitrine, coudes sous le poids</li>
+    <li>Hanches en arrière, talons au sol, poitrine fière</li>
+  </ul>
+  <div class="sets" data-rest="90">
+    <button class="set" data-k="gob-1">S1</button><button class="set" data-k="gob-2">S2</button><button class="set" data-k="gob-3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Fente latérale haltère</h3><span class="dose">3 × 8 / côté</span></div>
+  <div class="video" data-id="R8jArZG2J6Q"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=R8jArZG2J6Q" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Grand pas latéral, hanches en arrière, l'autre jambe tendue</li>
+    <li>Pousse fort sur le talon pour revenir — comme un replacement</li>
+  </ul>
+  <div class="sets" data-rest="90">
+    <button class="set" data-k="fen-1">S1</button><button class="set" data-k="fen-2">S2</button><button class="set" data-k="fen-3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Soulevé de terre roumain</h3><span class="dose">2 × 10</span></div>
+  <div class="video" data-id="aa57T45iFSE"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=aa57T45iFSE" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Genoux à peine fléchis, le mouvement vient des hanches</li>
+    <li>Haltères qui frôlent les cuisses, dos plat verrouillé</li>
+  </ul>
+  <div class="sets" data-rest="90">
+    <button class="set" data-k="rdl-1">S1</button><button class="set" data-k="rdl-2">S2</button>
+  </div>
+</section>
+
+<h2><span class="tag tagB">BLOC B</span> Tronc &amp; rotation <span class="rest-hint">repos 60″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Pallof Press</h3><span class="dose">3 × 10 / côté</span></div>
+  <div class="video" data-id="xeFp4MXad98"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=xeFp4MXad98" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Câble sur le côté, bras tendus devant — refuse la rotation</li>
+    <li>Immobile = réussi. Abdos et fessiers serrés</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="pal-1">S1</button><button class="set" data-k="pal-2">S2</button><button class="set" data-k="pal-3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Woodchop poulie (bas → haut)</h3><span class="dose">3 × 10 / côté</span></div>
+  <div class="video" data-id="rHfjG2Oflz0"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=rHfjG2Oflz0" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Léger et rapide : la rotation vient des hanches</li>
+    <li>Explosif à l'aller, contrôlé au retour — comme une frappe</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="wod-1">S1</button><button class="set" data-k="wod-2">S2</button><button class="set" data-k="wod-3">S3</button>
+  </div>
+</section>
+
+<h2><span class="tag tagC">BLOC C</span> Haut du corps <span class="rest-hint">repos 90″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Rowing assis poulie</h3><span class="dose">3 × 10</span></div>
+  <div class="video" data-id="EU7bOadUsNI"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=EU7bOadUsNI" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Tire vers le nombril, coudes le long du corps</li>
+    <li>Serre les omoplates 1 s, buste immobile</li>
+  </ul>
+  <div class="sets" data-rest="90">
+    <button class="set" data-k="row-1">S1</button><button class="set" data-k="row-2">S2</button><button class="set" data-k="row-3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Face Pull</h3><span class="dose">2 × 12-15</span></div>
+  <div class="video" data-id="eTCBSFlCJ_s"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=eTCBSFlCJ_s" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Corde vers le front, coudes hauts et ouverts</li>
+    <li>Léger — exo de qualité, pas de charge</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="fac-1">S1</button><button class="set" data-k="fac-2">S2</button>
+  </div>
+</section>
+
+<h2><span class="tag tagD">BLOC D</span> Coude &amp; avant-bras <span class="rest-hint">repos 45″ · TRÈS léger</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Curl inversé</h3><span class="dose">2 × 12-15</span></div>
+  <div class="video" data-id="pXx38ZWRYjo"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=pXx38ZWRYjo" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Paumes vers le BAS — c'est ça qui cible ton brachio-radial</li>
+    <li>Quasi à vide au début (barre seule / 2-4 kg), lent</li>
+  </ul>
+  <div class="sets" data-rest="45">
+    <button class="set" data-k="cur-1">S1</button><button class="set" data-k="cur-2">S2</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Extension poignet excentrique</h3><span class="dose">2 × 15</span></div>
+  <div class="video" data-id="xdEwDxcHwoY"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=xdEwDxcHwoY" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Avant-bras posé, main dans le vide, paume vers le bas</li>
+    <li>Monte avec l'aide de l'autre main, descends SEUL en 3-4 s</li>
+  </ul>
+  <div class="sets" data-rest="45">
+    <button class="set" data-k="poi-1">S1</button><button class="set" data-k="poi-2">S2</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Farmer's Hold</h3><span class="dose">2 × 30 s</span></div>
+  <div class="video" data-id="Pvm5omaqlz4"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=Pvm5omaqlz4" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Deux haltères lourds, debout, grand, épaules basses</li>
+    <li>Serre fort la poignée — l'exo qui blinde ton grip</li>
+  </ul>
+  <div class="sets" data-rest="45">
+    <button class="set" data-k="far-1">S1</button><button class="set" data-k="far-2">S2</button>
+  </div>
+</section>
+
+<div class="footer">
+📅 <b>Placement :</b> jour sans ping, jamais la veille d'un match. 🥤 <b>Après :</b> skyr + banane dans les 30 min.<br>
+📲 <b>Astuce :</b> dans Safari, Partage → <b>« Sur l'écran d'accueil »</b> → la page devient une app plein écran.
+</div>
+
+</div><!-- /sec-salle -->
+
+<!-- ==================== MODE VACANCES ==================== -->
+<div id="sec-vac" style="display:none">
+
+<div class="rules vac">🏖️ <b>Semaine type (×3) :</b> 2× ce circuit élastiques (25-30 min) + 2× cardio facile (20-40 min course FC 120-140, natation ou vélo) + marche quotidienne.<br>
+⚠️ <b>Cheville gauche :</b> course progressive (20 min d'abord), terrain plat — si elle râle, bascule natation/vélo. Le <b>bloc coude</b> est le seul non-négociable : le tendon doit rester "au courant".</div>
+
+<h2><span class="tag tagV">ÉCHAUFFEMENT</span><span class="rest-hint">2-3 min</span></h2>
+<div class="card warm">
+  <p>Cercles de bras et de hanches + 10 squats à vide</p>
+  <button class="set" data-k="v-w1">Fait</button>
+</div>
+
+<h2><span class="tag tagA">JAMBES</span> élastique &amp; poids du corps <span class="rest-hint">repos 60″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Squat élastique</h3><span class="dose">3 × 12-15</span></div>
+  <div class="video" data-id="5l8bDoRIyxc"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=5l8bDoRIyxc" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Bande sous les deux pieds, poignées aux épaules</li>
+    <li>Mêmes repères que le goblet : hanches en arrière, talons au sol</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="v-sq1">S1</button><button class="set" data-k="v-sq2">S2</button><button class="set" data-k="v-sq3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Fente latérale (poids du corps)</h3><span class="dose">3 × 10 / côté</span></div>
+  <div class="video" data-id="73eKch1SMx0"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=73eKch1SMx0" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Amplitude max puisque pas de charge — descends bien</li>
+    <li>Retour explosif sur le talon : ton replacement de ping</li>
+    <li>Trop facile ? Descente lente 3 s → 3×15 → sac à dos chargé contre la poitrine</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="v-fe1">S1</button><button class="set" data-k="v-fe2">S2</button><button class="set" data-k="v-fe3">S3</button>
+  </div>
+</section>
+
+<h2><span class="tag tagB">TRONC</span> ancrage porte ou poteau <span class="rest-hint">repos 60″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Pallof press élastique</h3><span class="dose">3 × 10 / côté</span></div>
+  <div class="video" data-id="P16SQlmWj1o"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=P16SQlmWj1o" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Élastique ancré à hauteur de poitrine, sur le côté</li>
+    <li>Bras tendus devant, refuse la rotation, respire lentement</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="v-pa1">S1</button><button class="set" data-k="v-pa2">S2</button><button class="set" data-k="v-pa3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Woodchop élastique (bas → haut)</h3><span class="dose">2 × 10 / côté</span></div>
+  <div class="video" data-id="kPugGvTvl1A"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=kPugGvTvl1A" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Ancrage en bas, tire en diagonale vers l'épaule opposée</li>
+    <li>Rotation des hanches, geste de frappe — vif à l'aller</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="v-wo1">S1</button><button class="set" data-k="v-wo2">S2</button>
+  </div>
+</section>
+
+<h2><span class="tag tagC">DOS &amp; ÉPAULES</span> <span class="rest-hint">repos 60″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Rowing élastique</h3><span class="dose">3 × 12-15</span></div>
+  <div class="video" data-id="k7EPhs1i9mU"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=k7EPhs1i9mU" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Élastique ancré (porte/poteau), tire vers le nombril</li>
+    <li>Omoplates serrées 1 s, buste immobile</li>
+  </ul>
+  <div class="sets" data-rest="60">
+    <button class="set" data-k="v-ro1">S1</button><button class="set" data-k="v-ro2">S2</button><button class="set" data-k="v-ro3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Face pull élastique</h3><span class="dose">2 × 15</span></div>
+  <div class="video" data-id="AlTGQrDOd98"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=AlTGQrDOd98" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Ancrage à hauteur du visage, tire vers le front</li>
+    <li>Coudes hauts, pouces vers l'arrière — léger</li>
+  </ul>
+  <div class="sets" data-rest="45">
+    <button class="set" data-k="v-fa1">S1</button><button class="set" data-k="v-fa2">S2</button>
+  </div>
+</section>
+
+<h2><span class="tag tagD">COUDE</span> le non-négociable <span class="rest-hint">repos 45″ · très léger</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Curl inversé élastique</h3><span class="dose">2 × 12-15</span></div>
+  <div class="video" data-id="L7yq91b4_bk"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=L7yq91b4_bk" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Bande sous les pieds, paumes vers le BAS</li>
+    <li>Monte lentement, tension légère — c'est de l'entretien</li>
+  </ul>
+  <div class="sets" data-rest="45">
+    <button class="set" data-k="v-cu1">S1</button><button class="set" data-k="v-cu2">S2</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Extension poignet (bouteille d'eau)</h3><span class="dose">2 × 15 — descente 3-4 s</span></div>
+  <div class="video" data-id="xdEwDxcHwoY"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=xdEwDxcHwoY" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Avant-bras sur une table, bouteille 1-1,5 L dans la main</li>
+    <li>Monte avec l'autre main, freine la descente SEUL en 3-4 s</li>
+  </ul>
+  <div class="sets" data-rest="45">
+    <button class="set" data-k="v-po1">S1</button><button class="set" data-k="v-po2">S2</button>
+  </div>
+</section>
+
+<div class="footer">
+🎒 <b>Kit valise :</b> élastiques (bande à poignées + ancrage de porte) · créatine en ziplock (~90 g) · chaussures de running · chargeur Whoop.<br>
+🌙 <b>Le vrai programme des vacances :</b> dormir sans réveil, alcool aux vrais moments, protéine à chaque repas, marcher. Revenir à 78 kg reposé = victoire.<br>
+🔙 <b>Au retour :</b> reprise ping progressive — pas de "rattrapage" en 3 jours collés 😄
+</div>
+
+</div><!-- /sec-vac -->
+
+</div>
+
+<div id="bar">
+  <div class="prog"><b id="pcount">0</b>/<span id="ptotal">26</span></div>
+  <div id="timer">—</div>
+  <button class="tbtn" id="t60">60″</button>
+  <button class="tbtn" id="t90">90″</button>
+  <button class="tbtn" id="tstop">✕</button>
+</div>
+
+<script>
+(function(){
+  var KEY='renfo-v2';
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+
+  var mode=(state._mode==='vac')?'vac':'salle';
+
+  // --- videos: tap-to-play ---
+  document.querySelectorAll('.video').forEach(function(v){
+    var id=v.getAttribute('data-id');
+    v.innerHTML='<img loading="lazy" src="https://i.ytimg.com/vi/'+id+'/hqdefault.jpg" alt=""><div class="play"><span>▶</span></div>';
+    v.addEventListener('click',function(){
+      v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    });
+  });
+
+  // --- sets ---
+  var sets=[].slice.call(document.querySelectorAll('.set'));
+  var pcount=document.getElementById('pcount');
+  var ptotal=document.getElementById('ptotal');
+  var banner=document.getElementById('done-banner');
+  function activeSets(){
+    return sets.filter(function(b){
+      return mode==='vac' ? !!b.closest('#sec-vac') : !!b.closest('#sec-salle');
+    });
+  }
+  function refresh(){
+    var act=activeSets();
+    var n=act.filter(function(b){return b.classList.contains('done');}).length;
+    pcount.textContent=n;
+    ptotal.textContent=act.length;
+    if(n===act.length){
+      banner.textContent=(mode==='vac')?'🏖️ Circuit vacances complet — bravo. Maintenant : plage.':'💪 Séance complète — skyr + banane, et bonne récup !';
+      banner.style.display='block';
+    }else{banner.style.display='none';}
+  }
+  sets.forEach(function(b){
+    var k=b.getAttribute('data-k');
+    if(state[k])b.classList.add('done');
+    b.addEventListener('click',function(){
+      var on=b.classList.toggle('done');
+      state[k]=on?1:0;save();refresh();
+      if(on){
+        var wrap=b.closest('.sets');
+        var rest=wrap?parseInt(wrap.getAttribute('data-rest')||'60',10):60;
+        startTimer(rest);
+      }
+    });
+  });
+
+  // --- mode switch ---
+  var secS=document.getElementById('sec-salle'),secV=document.getElementById('sec-vac');
+  function applyMode(){
+    secS.style.display=(mode==='salle')?'':'none';
+    secV.style.display=(mode==='vac')?'':'none';
+    document.querySelectorAll('.chip.mode').forEach(function(c){
+      c.classList.toggle('on',c.getAttribute('data-mode')===mode);
+    });
+    refresh();
+  }
+  document.querySelectorAll('.chip.mode').forEach(function(c){
+    c.addEventListener('click',function(){
+      mode=c.getAttribute('data-mode');
+      state._mode=mode;save();applyMode();
+    });
+  });
+  applyMode();
+
+  // --- reset (mode actif uniquement) ---
+  document.getElementById('reset').addEventListener('click',function(){
+    var label=(mode==='vac')?'le circuit vacances':'la séance salle';
+    if(!confirm('Remettre '+label+' à zéro ?'))return;
+    activeSets().forEach(function(b){
+      b.classList.remove('done');
+      delete state[b.getAttribute('data-k')];
+    });
+    save();refresh();stopTimer();
+  });
+
+  // --- rest timer ---
+  var tEl=document.getElementById('timer'),iv=null,left=0;
+  function fmt(s){var m=Math.floor(s/60),x=s%60;return m+':'+(x<10?'0':'')+x;}
+  function tick(){
+    left--;
+    if(left<=0){tEl.textContent='GO !';tEl.className='zero';stop_();}
+    else tEl.textContent=fmt(left);
+  }
+  function stop_(){if(iv){clearInterval(iv);iv=null;}}
+  function startTimer(s){stop_();left=s;tEl.textContent=fmt(left);tEl.className='run';iv=setInterval(tick,1000);}
+  function stopTimer(){stop_();tEl.textContent='—';tEl.className='';}
+  document.getElementById('t60').addEventListener('click',function(){startTimer(60);});
+  document.getElementById('t90').addEventListener('click',function(){startTimer(90);});
+  document.getElementById('tstop').addEventListener('click',stopTimer);
+
+  // --- wake lock ---
+  var wbtn=document.getElementById('wake'),lock=null;
+  if(!('wakeLock' in navigator)){wbtn.style.display='none';}
+  else{
+    var acquire=function(){
+      navigator.wakeLock.request('screen').then(function(l){
+        lock=l;wbtn.classList.add('on');wbtn.textContent='🔆 Écran allumé ✓';
+        l.addEventListener('release',function(){wbtn.classList.remove('on');wbtn.textContent='🔆 Écran allumé';lock=null;});
+      }).catch(function(){});
+    };
+    wbtn.addEventListener('click',function(){
+      if(lock){lock.release();}else{acquire();}
+    });
+    document.addEventListener('visibilitychange',function(){
+      if(document.visibilityState==='visible'&&wbtn.classList.contains('on')&&!lock)acquire();
+    });
+  }
+})();
+</script>
+</body>
+</html>
