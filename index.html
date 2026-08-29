@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0e14">
-<title>Renfo Ping — 45 min</title>
+<title>Renfo Ping</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
@@ -16,15 +16,16 @@ padding:calc(14px + env(safe-area-inset-top)) 12px calc(86px + env(safe-area-ins
 h1{font-size:21px;font-weight:800;letter-spacing:-.4px}
 h1 .em{color:#2dd4bf}
 .sub{color:#7d8794;font-size:12.5px;margin-top:2px}
-.chips{display:flex;gap:8px;margin-top:12px}
-.chip{flex:1;border:1px solid #263042;background:#141b26;color:#c9d1d9;font-size:13px;font-weight:600;padding:11px 8px;border-radius:12px;text-align:center;cursor:pointer}
+.sub b{color:#56d364;font-weight:700}
+.chips{display:flex;gap:8px;margin-top:10px}
+.chip{flex:1;border:1px solid #263042;background:#141b26;color:#c9d1d9;font-size:13px;font-weight:600;padding:11px 6px;border-radius:12px;text-align:center;cursor:pointer}
 .chip:active{background:#1c2635}
 .chip.on{border-color:#2dd4bf;color:#2dd4bf;background:#0f2a28}
 h2{font-size:14px;font-weight:700;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
 .tag{font-size:10px;font-weight:800;letter-spacing:.5px;padding:3px 9px;border-radius:20px}
 .tagA{background:#163a2a;color:#3fb950}.tagB{background:#0f3438;color:#2dd4bf}
 .tagC{background:#14283f;color:#2e9bff}.tagD{background:#3a2a16;color:#f5a97f}
-.tagV{background:#2a1f3a;color:#a371f7}
+.tagV{background:#2a1f3a;color:#a371f7}.tagE{background:#33202a;color:#ff7b72}
 .rest-hint{font-size:11px;color:#6e7681;font-weight:400;margin-left:auto}
 .card{background:#11161f;border:1px solid #1d2531;border-radius:16px;padding:14px;margin-bottom:12px}
 .chead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
@@ -38,8 +39,8 @@ h2{font-size:14px;font-weight:700;margin:24px 0 10px;display:flex;align-items:ce
 .ytlink{display:block;text-align:right;font-size:11px;color:#6e7681;text-decoration:none;margin-top:6px}
 .cues{margin:10px 0 12px;padding-left:16px}
 .cues li{font-size:13px;color:#b6bfc9;margin:4px 0}
-.sets{display:flex;gap:10px}
-.set{flex:1;min-height:48px;border-radius:12px;border:1.5px solid #2a3547;background:#151c28;color:#8b96a5;font-size:14px;font-weight:700;cursor:pointer}
+.sets{display:flex;gap:10px;flex-wrap:wrap}
+.set{flex:1;min-width:70px;min-height:48px;border-radius:12px;border:1.5px solid #2a3547;background:#151c28;color:#8b96a5;font-size:14px;font-weight:700;cursor:pointer}
 .set:active{transform:scale(.97)}
 .set.done{background:#12332a;border-color:#3fb950;color:#3fb950}
 .set.done::after{content:" ✓"}
@@ -48,29 +49,36 @@ h2{font-size:14px;font-weight:700;margin:24px 0 10px;display:flex;align-items:ce
 .warm .set{flex:0 0 92px}
 .rules{background:#11161f;border-left:3px solid #e3b341;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#c9d1d9;margin:14px 0 6px}
 .rules.vac{border-left-color:#a371f7}
+.rules.endu{border-left-color:#ff7b72}
+.rules.pieds{border-left-color:#2e9bff}
+.rules b{color:#e6edf3}
 .footer{margin-top:22px;background:#11161f;border:1px solid #1d2531;border-radius:14px;padding:14px;font-size:12.5px;color:#c2cad3}
 .footer b{color:#2dd4bf}
 #bar{position:fixed;left:0;right:0;bottom:0;background:rgba(13,18,26,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid #1d2531;
-padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px;z-index:50}
-#bar .prog{font-size:13px;font-weight:700;color:#a9b2bd;min-width:74px}
+padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;z-index:50}
+#bar .prog{font-size:13px;font-weight:700;color:#a9b2bd;min-width:64px}
 #bar .prog b{color:#2dd4bf}
-#timer{flex:1;text-align:center;font-size:24px;font-weight:800;font-variant-numeric:tabular-nums;color:#e6edf3}
+#timer{flex:1;text-align:center;font-size:23px;font-weight:800;font-variant-numeric:tabular-nums;color:#e6edf3}
 #timer.run{color:#2dd4bf}
 #timer.zero{color:#3fb950;animation:pulse .5s ease 4}
 @keyframes pulse{50%{opacity:.25}}
-.tbtn{border:1px solid #263042;background:#141b26;color:#c9d1d9;font-size:13px;font-weight:700;padding:10px 12px;border-radius:11px;cursor:pointer}
+.tbtn{border:1px solid #263042;background:#141b26;color:#c9d1d9;font-size:12.5px;font-weight:700;padding:10px 10px;border-radius:11px;cursor:pointer}
 .tbtn:active{background:#1c2635}
 #done-banner{display:none;background:linear-gradient(135deg,#12332a,#0f2a28);border:1px solid #3fb950;color:#3fb950;font-weight:700;text-align:center;border-radius:14px;padding:14px;margin:14px 0;font-size:15px}
 </style>
 </head>
 <body><div class="wrap">
 
-<h1>🏋️ Renfo <span class="em">spécial ping</span></h1>
-<div class="sub">Coche tes séries, le chrono de repos part tout seul · progression sauvegardée</div>
+<h1>🏓 Renfo <span class="em">spécial ping</span></h1>
+<div class="sub">Périodisation Virgile : Force ✓ → <b>Endurance (en cours)</b> → Vitesse (mi-sept) · v. 29/08/2026</div>
 
 <div class="chips">
-  <button class="chip mode on" data-mode="salle">🏋️ Salle — 45 min</button>
-  <button class="chip mode" data-mode="vac">🏖️ Vacances — 30 min</button>
+  <button class="chip mode" data-mode="force">💪 Force 45′</button>
+  <button class="chip mode on" data-mode="endu">🔥 Endurance 30′</button>
+</div>
+<div class="chips">
+  <button class="chip mode" data-mode="pieds">🦶 Pieds 15′</button>
+  <button class="chip mode" data-mode="vac">🏖️ Vacances 30′</button>
 </div>
 <div class="chips">
   <button class="chip" id="wake">🔆 Écran allumé</button>
@@ -79,14 +87,212 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
 
 <div id="done-banner"></div>
 
-<!-- ==================== MODE SALLE ==================== -->
-<div id="sec-salle">
+<!-- ==================== MODE ENDURANCE ==================== -->
+<div id="sec-endu">
 
-<div class="rules">⚖️ <b>Règles :</b> garde 2-3 reps en réserve (jamais à l'échec) · bloc D <b>très léger</b> · douleur &gt;3/10 pendant, ou le lendemain matin → allège. Jour SANS ping.</div>
+<div class="rules endu">🔥 <b>Phase actuelle (Virgile, 12/08) :</b> le socle force est bâti → on le rend <b>endurant</b>. Mouvements simples répétés longtemps, technique propre du premier au dernier rep — si elle se dégrade, la série est finie.<br>
+<b>Format :</b> 40″ d'effort / 20″ de repos · <b>3 tours</b> du circuit · 1-2 min entre les tours. Coche un tour = le chrono de 20″ part (bouton 40″ pour chronométrer l'effort).<br>
+🚫 Médecine ball retiré (pas de matériel) — remplacé par les mountain climbers.</div>
 
-<h2><span class="tag tagB">ÉCHAUFFEMENT</span><span class="rest-hint">5 min</span></h2>
+<h2><span class="tag tagE">MOBILITÉ</span> obligatoire avant l'effort (consigne Virgile) <span class="rest-hint">3-4 min</span></h2>
 <div class="card warm">
-  <p>Rameur ou vélo 3-4 min + cercles d'épaules et rotations de hanches</p>
+  <p>Cercles chevilles, genoux, hanches, épaules, poignets + flexions douces + 10 squats à vide lents</p>
+  <button class="set" data-k="e-w">Fait</button>
+</div>
+
+<h2><span class="tag tagE">CIRCUIT</span> 7 stations × 3 tours <span class="rest-hint">40″ / 20″</span></h2>
+
+<section class="card">
+  <div class="chead"><h3>Corde à sauter</h3><span class="dose">40″ × 3 tours</span></div>
+  <div class="video" data-id="Y3wzaWE9QRY"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=Y3wzaWE9QRY" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Rebonds bas (1-2 cm), sur l'avant du pied, poignets qui tournent — pas les bras</li>
+    <li>Pas de corde sous la main ? Petits sauts sur place, même rythme</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-co1">T1</button><button class="set" data-k="e-co2">T2</button><button class="set" data-k="e-co3">T3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Squat rythmé (poids du corps)</h3><span class="dose">40″ × 3 tours</span></div>
+  <div class="video" data-id="P-yaD24bUE8"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=P-yaD24bUE8" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Tempo régulier, talons au sol, respiration continue</li>
+    <li>Même repères que le goblet : hanches en arrière, poitrine fière</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-sq1">T1</button><button class="set" data-k="e-sq2">T2</button><button class="set" data-k="e-sq3">T3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Pas chassés</h3><span class="dose">40″ × 3 tours — LE déplacement du ping</span></div>
+  <div class="video" data-id="mziPKITnPeQ"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=mziPKITnPeQ" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>3-4 m aller-retour, bassin bas, buste face au "jeu"</li>
+    <li>Ne JAMAIS croiser les pieds — appuis vifs et silencieux</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-pc1">T1</button><button class="set" data-k="e-pc2">T2</button><button class="set" data-k="e-pc3">T3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Pompes</h3><span class="dose">40″ × 3 tours</span></div>
+  <div class="video" data-id="WDIpL0pjun0"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=WDIpL0pjun0" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Gaine serrée, coudes ~45°, amplitude complète</li>
+    <li>Sur les genoux dès que la technique lâche — tenir les 40″ proprement</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-po1">T1</button><button class="set" data-k="e-po2">T2</button><button class="set" data-k="e-po3">T3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Mountain climbers</h3><span class="dose">40″ × 3 tours — gainage dynamique</span></div>
+  <div class="video" data-id="Q_olQdxEPF4"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=Q_olQdxEPF4" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Épaules au-dessus des poignets, dos plat, bassin stable</li>
+    <li>Genoux vers la poitrine en rythme — vitesse seulement si le bassin ne danse pas</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-mc1">T1</button><button class="set" data-k="e-mc2">T2</button><button class="set" data-k="e-mc3">T3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Crunch pédalage</h3><span class="dose">40″ × 3 tours</span></div>
+  <div class="video" data-id="wpRI3xBhJmo"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=wpRI3xBhJmo" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Coude vers le genou opposé, lent et contrôlé — pas de saccades</li>
+    <li>Le bas du dos reste au sol, nuque relâchée</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-cr1">T1</button><button class="set" data-k="e-cr2">T2</button><button class="set" data-k="e-cr3">T3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Fast feet (tipping)</h3><span class="dose">40″ × 3 tours</span></div>
+  <div class="video" data-id="OwlOOHHLHMs"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=OwlOOHHLHMs" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Appuis ultra-rapides, très bas, en position de jeu — mains prêtes</li>
+    <li>Talon qui se décolle à peine, regard à l'horizontale</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="e-ff1">T1</button><button class="set" data-k="e-ff2">T2</button><button class="set" data-k="e-ff3">T3</button>
+  </div>
+</section>
+
+<div class="footer">
+📅 <b>Fréquence :</b> 2×/semaine, jours sans ping (ou après une séance légère). La séance 💪 Force reste 1×/semaine en entretien.<br>
+🏃 <b>Cardio :</b> vélo / natation / marche active = valeurs sûres. <b>Course : réintroduction progressive</b> — 15-20 min terrain plat, feu vert si zéro douleur pendant + 24 h après.<br>
+🧘 <b>Après :</b> retour au calme + auto-massages (consigne Virgile). Douleur qui augmente = on arrête.<br>
+⚡ <b>Bloc VITESSE :</b> annoncé par Virgile pour ~mi-septembre — l'app sera mise à jour à son lancement.
+</div>
+
+</div><!-- /sec-endu -->
+
+<!-- ==================== MODE PIEDS & PROPRIO ==================== -->
+<div id="sec-pieds" style="display:none">
+
+<div class="rules pieds">🦶 <b>Micro-séance 12-18 min, 2×/semaine</b> (manuel ch.16, validé Virgile : "rythme, proprio, tipping — tout le travail de pieds"). Le but n'est <b>pas</b> de finir essoufflé : des appuis <b>propres et silencieux</b>. Sol stable, chaussures adaptées, espace autour de toi. Vitesse 50-70 %, priorité au retour en position.</div>
+
+<h2><span class="tag tagC">MOBILITÉ</span> avant l'effort <span class="rest-hint">2-3 min</span></h2>
+<div class="card warm">
+  <p>Cercles de chevilles appuyés (consigne kiné), hanches, flexions douces</p>
+  <button class="set" data-k="p-w">Fait</button>
+</div>
+
+<section class="card">
+  <div class="chead"><h3>Tipping bas (rythme)</h3><span class="dose">4 × 20″ · repos 20″</span></div>
+  <div class="video" data-id="Y0blg9GWGis"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=Y0blg9GWGis" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Petits rebonds/tipping très bas, talon qui se décolle à peine</li>
+    <li>Buste stable, regard à l'horizontale, mains en position de jeu</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="p-ti1">S1</button><button class="set" data-k="p-ti2">S2</button><button class="set" data-k="p-ti3">S3</button><button class="set" data-k="p-ti4">S4</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Déplacements 2 points RV ↔ CD</h3><span class="dose">3 × 20″ · repos 30″</span></div>
+  <div class="video" data-id="qo-MQmhBtiI"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=qo-MQmhBtiI" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Revers → milieu → coup droit en shadow, à vitesse modérée</li>
+    <li>Le bassin reste face au jeu, la tête stable — pas de grand bond</li>
+  </ul>
+  <div class="sets" data-rest="30">
+    <button class="set" data-k="p-de1">S1</button><button class="set" data-k="p-de2">S2</button><button class="set" data-k="p-de3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Entrée-sortie (balle courte)</h3><span class="dose">3 × 20″ · repos 30″</span></div>
+  <div class="video" data-id="SzH1whJ5M44"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=SzH1whJ5M44" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Pas vers une balle courte imaginaire, puis recul contrôlé</li>
+    <li>Ne pas croiser les pieds en urgence — sortie équilibrée</li>
+  </ul>
+  <div class="sets" data-rest="30">
+    <button class="set" data-k="p-es1">S1</button><button class="set" data-k="p-es2">S2</button><button class="set" data-k="p-es3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Pivot contrôlé</h3><span class="dose">3 × 4-6 reps · repos 30″</span></div>
+  <div class="video" data-id="paVopK05Syo"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=paVopK05Syo" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Deux revers imaginaires → petit retrait du pied droit + rotation → CD compact</li>
+    <li>Pas de grande frappe à vide : pieds, préparation haute, retour neutre</li>
+  </ul>
+  <div class="sets" data-rest="30">
+    <button class="set" data-k="p-pi1">S1</button><button class="set" data-k="p-pi2">S2</button><button class="set" data-k="p-pi3">S3</button>
+  </div>
+</section>
+
+<section class="card">
+  <div class="chead"><h3>Proprio unipodal</h3><span class="dose">2 × 20-30″ / jambe</span></div>
+  <div class="video" data-id="-MUBv4YfNX8"></div>
+  <a class="ytlink" href="https://www.youtube.com/watch?v=-MUBv4YfNX8" target="_blank">ouvrir dans YouTube ↗</a>
+  <ul class="cues">
+    <li>Équilibre sur un pied près d'un support, puis petites atteintes en étoile</li>
+    <li>Difficulté ↑ seulement si l'appui reste stable et indolore (yeux fermés ensuite)</li>
+  </ul>
+  <div class="sets" data-rest="20">
+    <button class="set" data-k="p-pr1">S1</button><button class="set" data-k="p-pr2">S2</button>
+  </div>
+</section>
+
+<div class="footer">
+🦶 <b>Pourquoi :</b> à 16 mois du Chopart/calcanéum, l'os est solide — ce qui se travaille encore, c'est le contrôle et la confiance d'appui (cadre PAASS). C'est aussi l'exigence n°1 de Virgile depuis 2024 : les appuis avant tout.<br>
+📅 Se glisse n'importe où : maison, salle, vacances — aucun matériel.
+</div>
+
+</div><!-- /sec-pieds -->
+
+<!-- ==================== MODE FORCE (salle MWM) ==================== -->
+<div id="sec-force" style="display:none">
+
+<div class="rules">💪 <b>Socle acquis (validé Virgile 12/08) → 1×/semaine en entretien</b> pendant la phase endurance. Garde 2-3 reps en réserve (jamais à l'échec) · bloc D <b>très léger</b> · douleur &gt;3/10 pendant, ou le lendemain matin → allège. Jour SANS ping.</div>
+
+<h2><span class="tag tagB">ÉCHAUFFEMENT</span> rameur + mobilité <span class="rest-hint">5 min</span></h2>
+<div class="card warm">
+  <p>Rameur ou vélo 3 min + mobilité articulaire complète : chevilles, hanches, épaules, poignets</p>
   <button class="set" data-k="w-1">Fait</button>
 </div>
 
@@ -233,17 +439,17 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
 📲 <b>Astuce :</b> dans Safari, Partage → <b>« Sur l'écran d'accueil »</b> → la page devient une app plein écran.
 </div>
 
-</div><!-- /sec-salle -->
+</div><!-- /sec-force -->
 
 <!-- ==================== MODE VACANCES ==================== -->
 <div id="sec-vac" style="display:none">
 
-<div class="rules vac">🏖️ <b>Semaine type (×3) :</b> 2× ce circuit élastiques (25-30 min) + 2× cardio facile (20-40 min course FC 120-140, natation ou vélo) + marche quotidienne.<br>
-⚠️ <b>Cheville gauche :</b> course progressive (20 min d'abord), terrain plat — si elle râle, bascule natation/vélo. Le <b>bloc coude</b> est le seul non-négociable : le tendon doit rester "au courant".</div>
+<div class="rules vac">🏖️ <b>Semaine type :</b> 2× ce circuit élastiques (25-30 min) + 2× cardio facile (vélo, natation, marche active — <b>course : réintro progressive si indolore sur 24 h</b>) + le mode 🦶 Pieds 2×/semaine (aucun matériel) + marche quotidienne.<br>
+⚠️ Le <b>bloc coude</b> reste le non-négociable : le tendon doit rester "au courant".</div>
 
-<h2><span class="tag tagV">ÉCHAUFFEMENT</span><span class="rest-hint">2-3 min</span></h2>
+<h2><span class="tag tagV">MOBILITÉ</span> avant l'effort <span class="rest-hint">2-3 min</span></h2>
 <div class="card warm">
-  <p>Cercles de bras et de hanches + 10 squats à vide</p>
+  <p>Cercles chevilles/hanches/épaules/poignets + 10 squats à vide</p>
   <button class="set" data-k="v-w1">Fait</button>
 </div>
 
@@ -361,8 +567,7 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
 </section>
 
 <div class="footer">
-🎒 <b>Kit valise :</b> élastiques (bande à poignées + ancrage de porte) · créatine en ziplock (~90 g) · chaussures de running · chargeur Whoop.<br>
-🌙 <b>Le vrai programme des vacances :</b> dormir sans réveil, alcool aux vrais moments, protéine à chaque repas, marcher. Revenir à 78 kg reposé = victoire.<br>
+🎒 <b>Kit valise :</b> élastiques (bande à poignées + ancrage de porte) · créatine en ziplock · chaussures · chargeur Whoop.<br>
 🔙 <b>Au retour :</b> reprise ping progressive — pas de "rattrapage" en 3 jours collés 😄
 </div>
 
@@ -371,8 +576,9 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
 </div>
 
 <div id="bar">
-  <div class="prog"><b id="pcount">0</b>/<span id="ptotal">26</span></div>
+  <div class="prog"><b id="pcount">0</b>/<span id="ptotal">22</span></div>
   <div id="timer">—</div>
+  <button class="tbtn" id="t40">40″</button>
   <button class="tbtn" id="t60">60″</button>
   <button class="tbtn" id="t90">90″</button>
   <button class="tbtn" id="tstop">✕</button>
@@ -385,7 +591,17 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
   try{state=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){state={};}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
 
-  var mode=(state._mode==='vac')?'vac':'salle';
+  var MODES=['force','endu','pieds','vac'];
+  var stored=state._mode;
+  if(stored==='salle')stored='force'; // migration ancienne version
+  var mode=(MODES.indexOf(stored)>=0)?stored:'endu';
+
+  var BANNERS={
+    force:'💪 Séance force complète — skyr + banane, et bonne récup !',
+    endu:'🔥 Circuit endurance bouclé (3 tours) — Virgile serait fier.',
+    pieds:'🦶 Pieds affûtés, appuis silencieux. La table te dira merci.',
+    vac:'🏖️ Circuit vacances complet — bravo. Maintenant : plage.'
+  };
 
   // --- videos: tap-to-play ---
   document.querySelectorAll('.video').forEach(function(v){
@@ -402,17 +618,15 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
   var ptotal=document.getElementById('ptotal');
   var banner=document.getElementById('done-banner');
   function activeSets(){
-    return sets.filter(function(b){
-      return mode==='vac' ? !!b.closest('#sec-vac') : !!b.closest('#sec-salle');
-    });
+    return sets.filter(function(b){return !!b.closest('#sec-'+mode);});
   }
   function refresh(){
     var act=activeSets();
     var n=act.filter(function(b){return b.classList.contains('done');}).length;
     pcount.textContent=n;
     ptotal.textContent=act.length;
-    if(n===act.length){
-      banner.textContent=(mode==='vac')?'🏖️ Circuit vacances complet — bravo. Maintenant : plage.':'💪 Séance complète — skyr + banane, et bonne récup !';
+    if(act.length && n===act.length){
+      banner.textContent=BANNERS[mode]||'💪 Séance complète !';
       banner.style.display='block';
     }else{banner.style.display='none';}
   }
@@ -431,10 +645,11 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
   });
 
   // --- mode switch ---
-  var secS=document.getElementById('sec-salle'),secV=document.getElementById('sec-vac');
   function applyMode(){
-    secS.style.display=(mode==='salle')?'':'none';
-    secV.style.display=(mode==='vac')?'':'none';
+    MODES.forEach(function(m){
+      var sec=document.getElementById('sec-'+m);
+      if(sec)sec.style.display=(m===mode)?'':'none';
+    });
     document.querySelectorAll('.chip.mode').forEach(function(c){
       c.classList.toggle('on',c.getAttribute('data-mode')===mode);
     });
@@ -449,9 +664,9 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
   applyMode();
 
   // --- reset (mode actif uniquement) ---
+  var LABELS={force:'la séance force',endu:'le circuit endurance',pieds:'la séance pieds',vac:'le circuit vacances'};
   document.getElementById('reset').addEventListener('click',function(){
-    var label=(mode==='vac')?'le circuit vacances':'la séance salle';
-    if(!confirm('Remettre '+label+' à zéro ?'))return;
+    if(!confirm('Remettre '+(LABELS[mode]||'la séance')+' à zéro ?'))return;
     activeSets().forEach(function(b){
       b.classList.remove('done');
       delete state[b.getAttribute('data-k')];
@@ -470,6 +685,7 @@ padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
   function stop_(){if(iv){clearInterval(iv);iv=null;}}
   function startTimer(s){stop_();left=s;tEl.textContent=fmt(left);tEl.className='run';iv=setInterval(tick,1000);}
   function stopTimer(){stop_();tEl.textContent='—';tEl.className='';}
+  document.getElementById('t40').addEventListener('click',function(){startTimer(40);});
   document.getElementById('t60').addEventListener('click',function(){startTimer(60);});
   document.getElementById('t90').addEventListener('click',function(){startTimer(90);});
   document.getElementById('tstop').addEventListener('click',stopTimer);
