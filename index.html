@@ -59,6 +59,25 @@ h2{font-size:14px;font-weight:700;margin:24px 0 10px;display:flex;align-items:ce
 .wk td:first-child{color:#7d8794;white-space:nowrap;font-weight:600;width:86px}
 .wk tr:last-child td{border-bottom:none}
 .wk b{color:#e6edf3}
+.plan{margin-top:22px;background:#11161f;border:1px solid #1d2531;border-radius:14px;padding:16px}
+.plan h3{font-size:15px;font-weight:800;color:#2dd4bf}
+.plan .psub{font-size:11.5px;color:#7d8794;margin:2px 0 12px}
+.prow{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid #161c26}
+.prow:last-child{border-bottom:none}
+.pd{flex:0 0 58px;font-size:11px;color:#7d8794;font-weight:600;padding-top:2px}
+.pdot{flex:0 0 10px;width:10px;height:10px;border-radius:50%;margin-top:4px}
+.pt{flex:1;font-size:12.5px;color:#d7dde4;line-height:1.35}
+.pt b{color:#e6edf3}
+.i-light{background:#3fb950}.i-mod{background:#2e9bff}.i-hard{background:#f5a97f}.i-war{background:#f85149}
+.fork{font-size:11px;color:#8b949e;text-align:center;padding:12px 0 2px;font-weight:700;letter-spacing:.3px}
+.branch{border-radius:12px;padding:8px 12px;margin:8px 0}
+.branch.a{background:#180f11;border:1px solid #47252e}
+.branch.b{background:#0e1620;border:1px solid #22384a}
+.branch h4{font-size:12px;font-weight:800;margin:4px 0 2px}
+.branch.a h4{color:#f5a97f}.branch.b h4{color:#2e9bff}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:10.5px;color:#8b949e;margin-top:12px;justify-content:center}
+.legend span{display:inline-flex;align-items:center;gap:4px}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block}
 #bar{position:fixed;left:0;right:0;bottom:0;background:rgba(13,18,26,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid #1d2531;
 padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:8px;z-index:50}
 #bar .prog{font-size:13px;font-weight:700;color:#a9b2bd;min-width:64px}
@@ -580,18 +599,36 @@ padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;align-it
 </div><!-- /sec-vac -->
 
 <!-- ==================== SEMAINE TYPE (visible dans tous les modes) ==================== -->
-<div class="footer">
-📅 <b>Ma semaine type</b> — 3 ping + 1 salle + micro-pieds · un seul jour de guerre : le vendredi
-<table class="wk">
-<tr><td>Lun midi</td><td>🦵 Mollets/équilibre 10′ + 🫀 <b>cardio Z2 25-35′</b> (rameur ou vélo, FC 120-140, test de parole) — finir frais pour le soir</td></tr>
-<tr><td>Lun 19h</td><td>🏓 <b>Cours collectif</b></td></tr>
-<tr><td>Mar midi</td><td>🏋️ <b>Salle MWM</b> : 🔥 Endurance + 5′ bloc D coude · 💪 Force 1 sem. sur 2-3</td></tr>
-<tr><td>Mer midi</td><td>🏓 <b>Cours Virgile</b></td></tr>
-<tr><td>Jeudi</td><td>OFF ou 🦵 jambes/cheville léger — <b>jamais de grosse charge veille de match</b></td></tr>
-<tr><td>Vendredi</td><td>🏓 <b>Soir : MATCH</b> (protocole compète) · sinon <b>midi : matchs partenaires</b></td></tr>
-<tr><td>Samedi</td><td>Repos — non négociable après un match à minuit</td></tr>
-<tr><td>Dimanche</td><td>Marche/vélo famille, mobilité</td></tr>
-</table>
+<div class="plan">
+  <h3>📅 Ma semaine type</h3>
+  <div class="psub">Lundi→mercredi identiques. Jeu/ven = aiguillage selon le calendrier.</div>
+
+  <div class="prow"><span class="pd">Lun midi</span><span class="pdot i-light"></span><span class="pt">🦵 Mollets/équilibre + 🫀 cardio Z2 <b>(léger, finir frais)</b></span></div>
+  <div class="prow"><span class="pd">Lun 19h</span><span class="pdot i-hard"></span><span class="pt">🏓 <b>Cours collectif</b></span></div>
+  <div class="prow"><span class="pd">Mar midi</span><span class="pdot i-mod"></span><span class="pt">🏋️ <b>Salle MWM</b> — Endurance + bloc coude · Force 1 sem./2-3</span></div>
+  <div class="prow"><span class="pd">Mer midi</span><span class="pdot i-hard"></span><span class="pt">🏓 <b>Cours Virgile</b></span></div>
+
+  <div class="fork">╱╲  JEUDI + VENDREDI : 2 scénarios  ╱╲</div>
+
+  <div class="branch a">
+    <h4>🅐 Semaine AVEC match (7×/phase)</h4>
+    <div class="prow"><span class="pd">Jeudi</span><span class="pdot i-light"></span><span class="pt"><b>Rien / repos</b> — on protège les jambes pour demain</span></div>
+    <div class="prow"><span class="pd">Ven soir</span><span class="pdot i-war"></span><span class="pt">🏓 <b>MATCH</b> (protocole compète)</span></div>
+    <div class="prow"><span class="pd">Samedi</span><span class="pdot i-light"></span><span class="pt"><b>Repos obligatoire</b> (match fini à minuit)</span></div>
+  </div>
+
+  <div class="branch b">
+    <h4>🅑 Semaine SANS match</h4>
+    <div class="prow"><span class="pd">Jeu midi</span><span class="pdot i-war"></span><span class="pt">🏓 <b>Matchs d'entraînement</b> — ton jour de jeu de la semaine</span></div>
+    <div class="prow"><span class="pd">Vendredi</span><span class="pdot i-light"></span><span class="pt"><b>Repos / libre</b></span></div>
+    <div class="prow"><span class="pd">Samedi</span><span class="pdot i-mod"></span><span class="pt">Normal — marche/vélo</span></div>
+  </div>
+
+  <div class="prow"><span class="pd">Dimanche</span><span class="pdot i-light"></span><span class="pt">Marche/vélo famille, mobilité</span></div>
+
+  <div class="legend">
+    <span><i class="i-light"></i>léger/récup</span><span><i class="i-mod"></i>modéré</span><span><i class="i-hard"></i>soutenu</span><span><i class="i-war"></i>jour de guerre</span>
+  </div>
 </div>
 
 </div>
